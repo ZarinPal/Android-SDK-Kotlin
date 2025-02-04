@@ -83,16 +83,17 @@ val request = CreatePaymentRequest(
     description = "test"
 )
 
-try {
-    CoroutineScope(Dispatchers.IO).launch {
-        response =
+CoroutineScope(Dispatchers.IO).launch {
+    try{
+        val response =
             zarinPal.createPayment(request, redirectUrl = {  paymentGatewayUri, status ->
                 if (status == 100)
-                    print("paymentGatewayUri : $paymentGatewayUri")
+                    Log.v("ZP_Log",paymentGatewayUri)
             })
+        Log.v("ZP_Log","$response")
+    } catch (ex: Exception) {
+        ex.printStackTrace()
     }
-} catch (e: Exception) {
-    print(e.message)
 }
 ```    
 
@@ -107,13 +108,14 @@ val request = PaymentVerifyRequest(
     amount = amount,
     authority = "your authority"
 )
-try {
-    CoroutineScope(Dispatchers.IO).launch {
-        response = zarinPal.paymentVerify(request)
-        print(response)
+
+CoroutineScope(Dispatchers.IO).launch {
+    try{
+        val response = zarinPal.paymentVerify(request)
+        Log.v("ZP_Log","$response")
+    } catch (ex: Exception) {
+        ex.printStackTrace()
     }
-} catch (e: Exception) {
-    print(e.message)
 }
 ```   
 
@@ -125,13 +127,14 @@ import com.example.zarinpal.data.remote.dto.inquiry.PaymentInquiryDataResponse
 import com.example.zarinpal.data.remote.dto.inquiry.PaymentInquiryRequest
 
 val request = PaymentInquiryRequest(authority = "authority")
-try {
-    CoroutineScope(Dispatchers.IO).launch {
-        response = zarinPal.paymentInquiry(request)
-        print(response)
+
+CoroutineScope(Dispatchers.IO).launch {
+    try{
+        val response = zarinPal.paymentInquiry(request)
+        Log.v("ZP_Log","$response")
+    } catch (ex: Exception) {
+        ex.printStackTrace()
     }
-} catch (e: Exception) {
-    print(e.message)
 }
 ```  
 
@@ -146,19 +149,19 @@ import com.example.zarinpal.data.remote.dto.unVerified.PaymentUnVerifiedRequest
 import com.example.zarinpal.data.remote.dto.Config
 
 val zarinPal = ZarinPal(
-        Config(
-            merchantId = "your-merchant-id",
-        )
+    Config(
+        merchantId = "your-merchant-id",
     )
+)
 
-  try {
-      CoroutineScope(Dispatchers.IO).launch {
-      response = zarinPal.paymentUnVerified()
-      print(response)
+CoroutineScope(Dispatchers.IO).launch {
+    try{
+        val response = zarinPal.paymentUnVerified()
+        Log.v("ZP_Log","$response")
+    } catch (ex: Exception) {
+        ex.printStackTrace()
     }
-  } catch (ex: Exception) {
-     print(ex.message)
-  }
+}
 ```   
 
 **Transaction Reversal**
@@ -173,22 +176,23 @@ import com.example.zarinpal.data.remote.dto.reverse.PaymentReverseDataResponse
 import com.example.zarinpal.data.remote.dto.reverse.PaymentReverseRequest
 
 val zarinPal = ZarinPal(
-        Config(
-            merchantId = "your-merchant-id",
-        )
+    Config(
+        merchantId = "your-merchant-id",
     )
+)
 
-  try {
-      CoroutineScope(Dispatchers.IO).launch {
+
+CoroutineScope(Dispatchers.IO).launch {
+    try{
         val request = PaymentReverseRequest(
             authority = "authority"
         )
         val response = zarinPal.paymentReverse(request)
-        print(response)
-      }
+        Log.v("ZP_Log","$response")
     } catch (ex: Exception) {
-      print(ex.message)
+        ex.printStackTrace()
     }
+}
 ```    
 
 **Refund**
@@ -198,11 +202,8 @@ val zarinPal = ZarinPal(
 ```kotlin
 import com.example.zarinpal.ZarinPal
 import com.example.zarinpal.data.remote.dto.Config
-import com.example.zarinpal.data.remote.dto.refund.PaymentRefundRequest
-import com.example.zarinpal.data.remote.dto.refund.PaymentRefundResponse
-import com.example.zarinpal.data.remote.dto.verification.PaymentVerificationDataResponse
-import com.example.zarinpal.data.remote.enum.MethodEnum
-import com.example.zarinpal.data.remote.enum.ReasonEnum
+import com.example.zarinpal.data.remote.dto.reverse.PaymentReverseDataResponse
+import com.example.zarinpal.data.remote.dto.reverse.PaymentReverseRequest
 
 val zarinPal = ZarinPal(
     Config(
@@ -210,20 +211,17 @@ val zarinPal = ZarinPal(
     )
 )
 
-try {
-    CoroutineScope(Dispatchers.IO).launch {
-        val request = PaymentRefundRequest(
-            amount = 20000,
-            description = "des",
-            sessionId = "id",
-            method = MethodEnum.PAYA,
-            reason = ReasonEnum.OTHER,
+
+CoroutineScope(Dispatchers.IO).launch {
+    try{
+        val request = PaymentReverseRequest(
+            authority = "authority"
         )
-        val response = zarinPal.paymentRefund(request)
-        print(response)
+        val response = zarinPal.paymentReverse(request)
+        Log.v("ZP_Log","$response")
+    } catch (ex: Exception) {
+        ex.printStackTrace()
     }
-} catch (ex: Exception) {
-    print(ex.message)
 }
 ```  
 
@@ -240,23 +238,23 @@ import com.example.zarinpal.data.remote.dto.transaction.TransactionRequest
 import com.example.zarinpal.data.remote.enum.FilterEnum
 
 val zarinPal = ZarinPal(
-        Config(
-            token = "your-access-token",
-        )
+    Config(
+        token = "your-access-token",
     )
+)
 
-  try{
-      CoroutineScope(Dispatchers.IO).launch {
-      val request = TransactionRequest(
+CoroutineScope(Dispatchers.IO).launch {
+    try{
+        val request = TransactionRequest(
             terminalId = textFieldTerminalId.text,
             filter = FilterEnum.ALL,
             limit = 25,
             offset = 0
         )
-      val response = zarinPal.getTransactions(request)
-      print(response)
+        val response = zarinPal.getTransactions(request)
+        Log.v("ZP_Log","$response")
+    } catch (ex: Exception) {
+        ex.printStackTrace()
     }
-  } catch (e: Exception) {
-    print(e.message)
-  }
-```    
+}
+```
