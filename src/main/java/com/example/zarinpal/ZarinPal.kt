@@ -44,8 +44,8 @@ class ZarinPal(config: Config) {
         Validator.validateMerchantId(paymentRequest.merchantId ?: config.merchantId)
         Validator.validateCallbackUrl(paymentRequest.callbackUrl)
         Validator.validateAmount(paymentRequest.amount)
-        Validator.validateMobile(paymentRequest.mobile)
-        Validator.validateEmail(paymentRequest.email)
+        Validator.validateMobile(paymentRequest.metadata?.mobile)
+        Validator.validateEmail(paymentRequest.metadata?.email)
         Validator.validateCardPan(paymentRequest.cardPan)
 
         val paymentResponse =
