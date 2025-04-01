@@ -24,13 +24,12 @@ data class CreatePaymentRequest(
     @SerialName("callback_url")
     val callbackUrl: String,
     val amount: Int,
-    val mobile: String?=null,
-    val email: String?=null,
+    val metadata: Metadata? = null,
     @SerialName("referrer_id")
-    val referrerId: String?=null,
-    val currency: String?=null,
-    val cardPan: String?=null,
-    val wages: List<WagesPaymentRequest>?=null,
+    val referrerId: String? = null,
+    val currency: String? = null,
+    val cardPan: String? = null,
+    val wages: List<WagesPaymentRequest>? = null,
 ) {
     /**
      * Creates a copy of the request with the merchantId and sandBox values
@@ -42,7 +41,40 @@ data class CreatePaymentRequest(
             sandBox = this.sandBox ?: config.sandBox
         )
     }
+
+    constructor(
+        merchantId: String,
+        sandBox: Boolean? = null,
+        description: String,
+        callbackUrl: String,
+        amount: Int,
+        mobile: String? = null,
+        email: String? = null,
+        referrerId: String? = null,
+        currency: String? = null,
+        cardPan: String? = null,
+        wages: List<WagesPaymentRequest>? = null
+    ) : this(
+        merchantId = merchantId,
+        sandBox = sandBox,
+        description = description,
+        callbackUrl = callbackUrl,
+        amount = amount,
+        metadata = if (!mobile.isNullOrBlank() || !email.isNullOrBlank()) Metadata(mobile, email) else null,
+        referrerId = referrerId,
+        currency = currency,
+        cardPan = cardPan,
+        wages = wages
+    )
+
 }
+
+@Keep
+@Serializable
+data class Metadata(
+    val mobile: String? = null,
+    val email: String? = null
+)
 
 
 @Keep
