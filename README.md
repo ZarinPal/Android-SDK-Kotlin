@@ -40,7 +40,7 @@ Add this to your root settings.gradle at the end of repositories.
 Add the dependency:
 ```gradle
     dependencies {
-     implementation("com.github.ZarinPal:Android-SDK-Kotlin:1.0.0")
+     implementation("com.github.ZarinPal:Android-SDK-Kotlin:1.0.1")
     }
 ```
 
