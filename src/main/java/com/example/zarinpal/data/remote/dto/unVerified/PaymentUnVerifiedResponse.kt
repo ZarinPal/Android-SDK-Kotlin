@@ -6,10 +6,10 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonElement
 
 /**
- * Represents the response data returned when querying unverified payment transactions.
+ * Response model for unverified payment queries.
  *
- * @property data Contains the details of the unverified payment response.
- * @property errors If present, contains any errors returned by the payment gateway.
+ * @property data Contains the details of the unverified payment.
+ * @property errors Optional error information returned by the payment gateway.
  */
 @Keep
 @Serializable
@@ -19,11 +19,11 @@ data class PaymentUnVerifiedResponse(
 )
 
 /**
- * Contains the data returned from the unverified payment query.
+ * Contains the main response data for unverified payments.
  *
- * @property code A numeric code indicating the result of the request.
- * @property message A descriptive message explaining the result or error.
- * @property authorities A list of [AuthorityResponse] objects representing the authorities related to the unverified payments.
+ * @property code Status code representing the result of the query.
+ * @property message Descriptive message about the outcome.
+ * @property authorities Optional list of authorities related to unverified transactions.
  */
 @Keep
 @Serializable
@@ -34,20 +34,21 @@ data class PaymentUnVerifiedDataResponse(
 )
 
 /**
- * Represents an authority related to an unverified payment.
+ * Represents an authority entry related to an unverified transaction.
  *
- * @property authority The authority code for the payment.
- * @property amount The amount of the unverified payment.
- * @property callbackUrl The URL to which the user will be redirected after payment.
- * @property referer The referer URL from which the request was made.
- * @property date The date of the unverified payment.
+ * @property authority Unique identifier for the transaction.
+ * @property amount Transaction amount in the smallest currency unit.
+ * @property callbackUrl URL to redirect the user after payment.
+ * @property referer Referring URL from which the request originated.
+ * @property date Timestamp of the transaction event.
  */
 @Keep
 @Serializable
 data class AuthorityResponse(
     val authority: String,
     val amount: Int,
-    @SerialName("callback_url") val callbackUrl: String,
+    @SerialName("callback_url")
+    val callbackUrl: String,
     val referer: String,
     val date: String
 )
