@@ -16,7 +16,7 @@ import com.example.zarinpal.data.remote.dto.unVerified.PaymentUnVerifiedRequest
 import com.example.zarinpal.data.remote.dto.verification.PaymentVerificationDataResponse
 import com.example.zarinpal.data.remote.dto.verification.PaymentVerifyRequest
 import io.ktor.client.HttpClient
-import io.ktor.client.engine.android.Android
+import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.features.defaultRequest
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
@@ -26,9 +26,7 @@ import io.ktor.client.request.header
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import kotlinx.serialization.json.Json
-import android.os.Build
-import androidx.core.os.BuildCompat
-import androidx.core.os.BundleCompat
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -103,7 +101,15 @@ interface PaymentService {
         fun create(config: Config): PaymentService {
             return PaymentServiceImpl(
                 config = config,
-                client = HttpClient(Android) {
+                client = HttpClient(OkHttp) {
+                    engine {
+                        config {
+                            retryOnConnectionFailure(true) // Retry if connection is lost
+                            connectTimeout(30, TimeUnit.SECONDS) // Time to wait for connection
+                            readTimeout(30, TimeUnit.SECONDS) // Time to read response
+                            writeTimeout(30, TimeUnit.SECONDS) // Time to write request
+                        }
+                    }
                     install(Logging) {
                         level = LogLevel.ALL
                     }
@@ -115,7 +121,7 @@ interface PaymentService {
                         )
                     }
                     defaultRequest {
-                        header("User-Agent", "ZarinPalSdk/v.1.0.1 (android kotlin)")
+                        header("User-Agent", "ZarinPalSdk/v.1.1.1 (android kotlin)")
                         header("Content-Type", "application/json")
                         contentType(ContentType.Application.Json)
                     }
