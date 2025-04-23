@@ -1,13 +1,13 @@
 plugins {
     kotlin("plugin.serialization") version "2.0.0"
-    id("com.android.library") version "8.8.0"
+    id("com.android.library") version "8.5.2"
     id("org.jetbrains.kotlin.android") version "1.9.0"
     id("maven-publish")
     id("org.jetbrains.dokka") version "1.8.20"
 }
 
-val ktorVersion = "1.6.3"
-val libraryVersion = "1.0.1"
+val ktorVersion = "1.6.8"
+val libraryVersion = "1.1.1"
 
 
 android {
@@ -22,9 +22,9 @@ android {
 
     defaultConfig {
         aarMetadata {
-            minCompileSdk = 24
+            minCompileSdk = 21
         }
-        minSdk = 24
+        minSdk = 21
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -71,7 +71,7 @@ publishing {
             pom {
                 dependencies {
                     implementation("io.ktor:ktor-client-core:$ktorVersion")
-                    implementation("io.ktor:ktor-client-android:$ktorVersion")
+                    implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
                     implementation("io.ktor:ktor-client-serialization:$ktorVersion")
                     implementation("io.ktor:ktor-client-logging:$ktorVersion")
                     implementation("ch.qos.logback:logback-classic:1.2.3")
@@ -94,7 +94,7 @@ publishing {
 }
 dependencies {
     implementation("io.ktor:ktor-client-core:$ktorVersion")
-    implementation("io.ktor:ktor-client-android:$ktorVersion")
+    implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
     implementation("io.ktor:ktor-client-serialization:$ktorVersion")
     implementation("io.ktor:ktor-client-logging:$ktorVersion")
     implementation("ch.qos.logback:logback-classic:1.2.3")
