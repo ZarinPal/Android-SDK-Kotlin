@@ -1,4 +1,3 @@
-
 package com.example.zarinpal.data.remote.dto.inquiry
 
 import com.example.zarinpal.data.remote.dto.Config
@@ -6,30 +5,26 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
- * Represents the request data required to inquire about a payment.
+ * Request data for inquiring about a payment.
  *
- * @property merchantId The unique identifier for the merchant (nullable).
- * @property sandBox Indicates if the payment inquiry should be processed in sandbox mode (test mode).
- * @property authority The authorization code for the payment inquiry (required).
+ * @property merchantId Optional merchant identifier.
+ * @property sandBox Indicates whether to use sandbox (test) mode.
+ * @property authority Required payment authority code.
  */
 @Serializable
 data class PaymentInquiryRequest(
     @SerialName("merchant_id")
-    val merchantId: String?=null,
-    val sandBox :Boolean?=null,
-    val authority :String,
-){
+    val merchantId: String? = null,
+    val sandBox: Boolean? = null,
+    val authority: String
+) {
+
     /**
-     * Creates a copy of the request with the merchantId and sandBox values
-     * replaced by the ones from the provided [Config] if they are null.
-     *
-     * @param config The [Config] object that provides default values for merchantId and sandBox.
-     * @return A new instance of [PaymentInquiryRequest] with updated values.
+     * Returns a copy of this request using fallback values from [config]
+     * if [merchantId] or [sandBox] are null.
      */
-    fun copyWithConfig(config: Config): PaymentInquiryRequest {
-        return this.copy(
-            merchantId = this.merchantId ?: config.merchantId,
-            sandBox = this.sandBox ?: config.sandBox
-        )
-    }
+    fun copyWithConfig(config: Config): PaymentInquiryRequest = copy(
+        merchantId = merchantId ?: config.merchantId,
+        sandBox = sandBox ?: config.sandBox
+    )
 }
