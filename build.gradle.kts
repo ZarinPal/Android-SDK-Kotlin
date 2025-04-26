@@ -9,24 +9,17 @@ plugins {
 val ktorVersion = "1.6.3"
 val libraryVersion = "1.0.1"
 
-
 android {
     namespace = "com.example.zarinpal"
     compileSdk = 34
 
-    publishing {
-        singleVariant("release") {
-            withSourcesJar()
-        }
-    }
-
     defaultConfig {
-        aarMetadata {
-            minCompileSdk = 24
-        }
         minSdk = 24
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+        aarMetadata {
+            minCompileSdk = 24
+        }
     }
 
     buildTypes {
@@ -47,6 +40,12 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+        }
+    }
 }
 
 tasks.register<Jar>("javadocJar") {
@@ -64,20 +63,24 @@ publishing {
             afterEvaluate {
                 from(components["release"])
             }
+
             artifact(tasks["javadocJar"]) {
                 classifier = "javadoc"
             }
 
             pom {
                 dependencies {
-                    implementation("io.ktor:ktor-client-core:$ktorVersion")
-                    implementation("io.ktor:ktor-client-android:$ktorVersion")
-                    implementation("io.ktor:ktor-client-serialization:$ktorVersion")
-                    implementation("io.ktor:ktor-client-logging:$ktorVersion")
-                    implementation("ch.qos.logback:logback-classic:1.2.3")
-                    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
+                    listOf(
+                        "io.ktor:ktor-client-core:$ktorVersion",
+                        "io.ktor:ktor-client-android:$ktorVersion",
+                        "io.ktor:ktor-client-serialization:$ktorVersion",
+                        "io.ktor:ktor-client-logging:$ktorVersion",
+                        "ch.qos.logback:logback-classic:1.2.3",
+                        "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0"
+                    ).forEach {
+                        implementation(it)
+                    }
                 }
-
             }
         }
     }
@@ -86,23 +89,29 @@ publishing {
         maven {
             url = uri("https://maven.pkg.github.com/alirezabashi98/zarinpal-sdk")
             credentials {
-                credentials.username = System.getenv("GITHUB_USER")
-                credentials.password = System.getenv("GITHUB_TOKEN")
+                username = System.getenv("GITHUB_USER")
+                password = System.getenv("GITHUB_TOKEN")
             }
         }
     }
 }
+
 dependencies {
-    implementation("io.ktor:ktor-client-core:$ktorVersion")
-    implementation("io.ktor:ktor-client-android:$ktorVersion")
-    implementation("io.ktor:ktor-client-serialization:$ktorVersion")
-    implementation("io.ktor:ktor-client-logging:$ktorVersion")
-    implementation("ch.qos.logback:logback-classic:1.2.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
-    implementation("androidx.core:core-ktx:1.13.0")
+    listOf(
+        "io.ktor:ktor-client-core:$ktorVersion",
+        "io.ktor:ktor-client-android:$ktorVersion",
+        "io.ktor:ktor-client-serialization:$ktorVersion",
+        "io.ktor:ktor-client-logging:$ktorVersion",
+        "ch.qos.logback:logback-classic:1.2.3",
+        "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0",
+        "androidx.core:core-ktx:1.13.0"
+    ).forEach {
+        implementation(it)
+    }
 }
 
 tasks.register<Copy>("copyLibs") {
     from(configurations.getByName("implementation"))
     into("libs")
 }
+ 
