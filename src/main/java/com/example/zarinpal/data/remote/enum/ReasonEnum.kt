@@ -2,13 +2,43 @@ package com.example.zarinpal.data.remote.enum
 
 import kotlinx.serialization.Serializable
 
-/**
- * Enum representing reasons for payment-related actions such as refunds or cancellations.
- */
 @Serializable
 enum class ReasonEnum {
-    DUPLICATE_TRANSACTION,  // Transaction was submitted more than once
-    SUSPICIOUS_TRANSACTION, // Transaction flagged as suspicious
-    CUSTOMER_REQUEST,       // Action initiated by customer request
-    OTHER                   // Any other unspecified reason
+    DUPLICATE_TRANSACTION,
+    SUSPICIOUS_TRANSACTION,
+    CUSTOMER_REQUEST,
+    OTHER;
+
+    override fun toString(): String = name.lowercase().replace("_", " ").replaceFirstChar { it.uppercase() }
 }
+
+object EnvironmentConfig {
+    enum class Environment(val baseUrl: String) {
+        SANDBOX("https://sandbox.zarinpal.com/pg/rest/WebGate/"),
+        PRODUCTION("https://www.zarinpal.com/pg/rest/WebGate/")
+    }
+
+    private var environment: Environment = Environment.SANDBOX
+
+    val baseUrl: String
+        get() = environment.baseUrl
+
+    fun useSandbox() {
+        environment = Environment.SANDBOX
+    }
+
+    fun useProduction() {
+        environment = Environment.PRODUCTION
+    }
+
+    fun isSandbox(): Boolean = environment == Environment.SANDBOX
+
+    fun isProduction(): Boolean = environment == Environment.PRODUCTION
+
+    fun currentEnvironment(): Environment = environment
+
+    fun debugInfo(): String = "Environment: ${environment.name}, Base URL: ${baseUrl}"
+
+    fun resolveEndpoint(path: String): String = baseUrl + path.trimStart('/')
+}
+ 
