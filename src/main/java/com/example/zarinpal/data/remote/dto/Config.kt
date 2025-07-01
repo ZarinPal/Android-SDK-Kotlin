@@ -1,14 +1,15 @@
 package com.example.zarinpal.data.remote.dto
 
 /**
- * Defines configuration parameters for accessing the payment service.
+ * Represents the configuration settings required for interacting with the payment service.
  *
- * @property merchantId The unique identifier used to authenticate the merchant.
- * @property token Optional token used for enhanced authentication, if applicable.
- * @property sandBox Flag indicating whether sandbox (test) mode is enabled. Defaults to `false`.
+ * @property merchantId A unique identifier for the merchant, used to authenticate requests.
+ * @property token An optional token for additional authentication, if required.
+ * @property sandBox Specifies whether the application should operate in sandbox mode (test mode).
+ *                   Defaults to `false` for production environment.
  */
 data class Config(
     val merchantId: String,
     val token: String? = null,
-    val sandBox: Boolean = false
+    val sandBox :Boolean=false
 )
