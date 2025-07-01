@@ -7,14 +7,14 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
- * Request data model for initiating a payment refund.
+ * Represents the request data required to initiate a payment refund.
  *
- * @property sessionId Unique identifier for the payment session being refunded.
- * @property description Description of the refund (e.g., "Refund for Order #1234").
- * @property method Method used for the refund (e.g., "credit", "bank transfer").
- * @property reason Reason for the refund (e.g., "Product returned", "Payment error").
- * @property amount Amount to be refunded in the smallest currency unit (e.g., IRR).
- * @property token Optional security token.
+ * @property sessionId The unique identifier for the payment session being refunded.
+ * @property description A description of the refund (e.g., "Refund for Order #1234").
+ * @property method The method used for the refund (e.g., "credit", "bank transfer").
+ * @property reason The reason for the refund (e.g., "Product returned", "Payment error").
+ * @property amount The amount to be refunded in the smallest currency unit (e.g., IRR).
+ * @property token A token used for additional security (nullable).
  */
 @Keep
 @Serializable
@@ -25,5 +25,6 @@ data class PaymentRefundRequest(
     val method: MethodEnum,
     val reason: ReasonEnum,
     val amount: Int,
-    val token: String? = null
+    val token: String? = null,
 )
+
