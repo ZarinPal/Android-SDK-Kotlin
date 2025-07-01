@@ -25,6 +25,7 @@ object HttpRoutes {
     private const val PAYMENT_INQUIRY = "/pg/v4/payment/inquiry.json"
     private const val PAYMENT_UN_VERIFIED = "/pg/v4/payment/unVerified.json"
     private const val PAYMENT_REVERSE = "/pg/v4/payment/reverse.json"
+    private const val PAYMENT_FEE = "/pg/v4/payment/feeCalculation.json"
 
     /**
      * Generates the URL for creating a payment request.
@@ -87,4 +88,17 @@ object HttpRoutes {
         if ((authority ?: "").isEmpty()) return ""
         return (if (sandBox) BASE_URL_SANDBOX else BASE_URL) + START_PAY_URL + authority
     }
+
+
+    /**
+     * Generates the URL for fee of  a payment.
+     *
+     * @return The full URL for the payment fee request.
+     */
+    fun getPaymentFee(): String {
+        return (  BASE_URL) + PAYMENT_FEE
+    }
+
+
+
 }

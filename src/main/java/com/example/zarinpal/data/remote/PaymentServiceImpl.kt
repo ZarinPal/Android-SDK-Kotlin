@@ -5,6 +5,8 @@ import com.example.zarinpal.data.remote.dto.Config
 import com.example.zarinpal.data.remote.dto.create.CreatePaymentDataResponse
 import com.example.zarinpal.data.remote.dto.create.CreatePaymentRequest
 import com.example.zarinpal.data.remote.dto.create.CreatePaymentResponse
+import com.example.zarinpal.data.remote.dto.fee.PaymentFeeRequest
+import com.example.zarinpal.data.remote.dto.fee.PaymentFeeResponse
 import com.example.zarinpal.data.remote.dto.inquiry.PaymentInquiryDataResponse
 import com.example.zarinpal.data.remote.dto.inquiry.PaymentInquiryRequest
 import com.example.zarinpal.data.remote.dto.inquiry.PaymentInquiryResponse
@@ -200,6 +202,26 @@ class PaymentServiceImpl(
         }
     }
 
+
+    /**
+     * Retrieves the fee for a single payment.
+     *
+     * @param paymentFeeRequest The request object containing details for fee calculation.
+     * @return A [PaymentFeeResponse] object with fee details, or null if the request fails.
+     */
+    override suspend fun getPaymentFee(paymentFeeRequest: PaymentFeeRequest): PaymentFeeResponse? {
+        return handleRequestWithErrorHandling {
+            val route = HttpRoutes.getPaymentFee()
+
+            val response = client.post<PaymentFeeResponse> {
+                url(route)
+                body = paymentFeeRequest
+            }
+            response
+        }
+    }
+
+
     /**
      * Processes error responses from the API.
      * @param jsonString The JSON string containing the error response.
@@ -215,13 +237,15 @@ class PaymentServiceImpl(
             // If 'errors' is an object
             if (jsonObject.has("errors") && !jsonObject.isNull("errors") && jsonObject.get("errors") is JSONObject) {
                 val errorObject = jsonObject.getJSONObject("errors")
-                val message :String?= errorObject.optString("message",null)
-                val faMessage :String?= errorObject.optString("fa_message",null)
+                val message: String? = errorObject.optString("message", null)
+                val faMessage: String? = errorObject.optString("fa_message", null)
 
-                if(!(faMessage ?: message).isNullOrBlank() && !(faMessage ?: message).isNullOrEmpty()) return faMessage ?: message
+                if (!(faMessage ?: message).isNullOrBlank() && !(faMessage
+                        ?: message).isNullOrEmpty()
+                ) return faMessage ?: message
 
                 val messageJsonObject = jsonObject.getString("message")
-                val faMessageJsonObject :String?= jsonObject.optString("fa_message",null)
+                val faMessageJsonObject: String? = jsonObject.optString("fa_message", null)
 
                 return faMessageJsonObject ?: messageJsonObject
             }
@@ -237,7 +261,7 @@ class PaymentServiceImpl(
                     // Check if there's a readable_code error
                     if (errorObject.has("readable_code")) {
                         val message = errorObject.getString("message")
-                        val faMessage :String?= errorObject.optString("fa_message", null)
+                        val faMessage: String? = errorObject.optString("fa_message", null)
 
                         return faMessage ?: message
                     }
@@ -249,14 +273,14 @@ class PaymentServiceImpl(
                             val message = validationObject.getString("message")
 
                             // Use the validation message
-                            val faMessage :String?= validationObject.optString("fa_message", null)
+                            val faMessage: String? = validationObject.optString("fa_message", null)
                             return faMessage ?: message
                         }
                     }
                     // Check if there's a other error
                     else {
                         val message = errorObject.getString("message")
-                        val faMessage :String?= errorObject.optString("fa_message", null)
+                        val faMessage: String? = errorObject.optString("fa_message", null)
 
                         return faMessage ?: message
                     }
