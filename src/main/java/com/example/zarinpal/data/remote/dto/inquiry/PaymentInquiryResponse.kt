@@ -6,10 +6,10 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonElement
 
 /**
- * Represents the response from a payment inquiry.
+ * Represents the response data returned after inquiring about a payment.
  *
- * @property data Details of the payment inquiry.
- * @property errors Error information returned by the payment gateway, if any.
+ * @property data Contains the details of the payment inquiry response.
+ * @property errors If present, contains any errors returned by the payment gateway.
  */
 @Keep
 @Serializable
@@ -19,16 +19,16 @@ data class PaymentInquiryResponse(
 )
 
 /**
- * Contains the details returned from a payment inquiry.
+ * Represents the data returned from the payment inquiry.
  *
- * @property status Status of the payment (e.g., "success", "failed").
- * @property code Numeric result code of the inquiry.
- * @property message Human-readable message about the result or error.
+ * @property status The status of the payment inquiry (e.g., "success", "failed").
+ * @property code A numeric code indicating the result of the inquiry.
+ * @property message A descriptive message explaining the result or error.
  */
 @Keep
 @Serializable
 data class PaymentInquiryDataResponse(
-    val status: String,
+    val status:String,
     val code: Int,
-    val message: String
+    val message: String,
 )
