@@ -7,7 +7,7 @@ plugins {
 }
 
 val ktorVersion = "1.6.3"
-val libraryVersion = "1.0.1"
+val libraryVersion = "1.1.1"
 
 
 android {
