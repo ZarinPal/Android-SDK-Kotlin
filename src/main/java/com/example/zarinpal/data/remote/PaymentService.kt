@@ -29,6 +29,8 @@ import kotlinx.serialization.json.Json
 import android.os.Build
 import androidx.core.os.BuildCompat
 import androidx.core.os.BundleCompat
+import com.example.zarinpal.data.remote.dto.fee.PaymentFeeRequest
+import com.example.zarinpal.data.remote.dto.fee.PaymentFeeResponse
 
 
 /**
@@ -93,6 +95,15 @@ interface PaymentService {
      */
     suspend fun paymentRefund(paymentRefundRequest: PaymentRefundRequest): PaymentRefundResponse?
 
+
+    /**
+     * Retrieves the fee for a payment.
+     *
+     * @param paymentFeeRequest The request object containing details for fee calculation.
+     * @return A PaymentFeeResponse object with fee details, or null if the request fails.
+     */
+    suspend fun getPaymentFee(paymentFeeRequest: PaymentFeeRequest): PaymentFeeResponse?
+
     companion object {
         /**
          * Creates an instance of PaymentService with the provided configuration.
@@ -115,7 +126,7 @@ interface PaymentService {
                         )
                     }
                     defaultRequest {
-                        header("User-Agent", "ZarinPalSdk/v.1.0.1 (android kotlin)")
+                        header("User-Agent", "ZarinPalSdk/v.1.1.1 (android kotlin)")
                         header("Content-Type", "application/json")
                         contentType(ContentType.Application.Json)
                     }

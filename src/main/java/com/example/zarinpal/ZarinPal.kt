@@ -5,6 +5,8 @@ import com.example.zarinpal.data.remote.PaymentService
 import com.example.zarinpal.data.remote.dto.Config
 import com.example.zarinpal.data.remote.dto.create.CreatePaymentDataResponse
 import com.example.zarinpal.data.remote.dto.create.CreatePaymentRequest
+import com.example.zarinpal.data.remote.dto.fee.PaymentFeeRequest
+import com.example.zarinpal.data.remote.dto.fee.PaymentFeeResponse
 import com.example.zarinpal.data.remote.dto.inquiry.PaymentInquiryDataResponse
 import com.example.zarinpal.data.remote.dto.inquiry.PaymentInquiryRequest
 import com.example.zarinpal.data.remote.dto.refund.PaymentRefundRequest
@@ -146,4 +148,21 @@ class ZarinPal(config: Config) {
 
         return service.paymentRefund(paymentRefundRequest)
     }
+
+
+
+    /**
+     * Retrieves the payment fee details by delegating the request to the PaymentService.
+     *
+     * @param paymentFeeRequest Contains the necessary information for calculating the payment fee.
+     * @return A PaymentFeeResponse with fee details, or null if the service call fails.
+     */
+    suspend fun getPaymentFee(
+        paymentFeeRequest: PaymentFeeRequest
+    ): PaymentFeeResponse? {
+        return service.getPaymentFee(paymentFeeRequest)
+    }
+
+
+
 }

@@ -1,13 +1,13 @@
 plugins {
     kotlin("plugin.serialization") version "2.0.0"
-    id("com.android.library") version "8.8.0"
+    id("com.android.library") version "8.7.3"
     id("org.jetbrains.kotlin.android") version "1.9.0"
     id("maven-publish")
     id("org.jetbrains.dokka") version "1.8.20"
 }
 
 val ktorVersion = "1.6.3"
-val libraryVersion = "1.0.1"
+val libraryVersion = "1.1.1"
 
 
 android {
