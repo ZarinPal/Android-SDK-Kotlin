@@ -6,13 +6,13 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
- * Data class for transaction query request.
+ * Represents the request data required to fetch transactions.
  *
- * @property terminalId Identifier of the terminal making the request.
- * @property filter Criteria used to filter transactions (e.g., completed, pending).
- * @property limit Maximum number of transactions to fetch.
- * @property offset Starting index for pagination.
- * @property token Optional authentication token.
+ * @property terminalId The unique identifier for the terminal from which transactions are being requested.
+ * @property filter A filter string to apply to the transactions (e.g., "completed", "pending").
+ * @property limit The maximum number of transactions to return.
+ * @property offset The starting point for fetching transactions (used for pagination).
+ * @property token A token used for additional security (nullable).
  */
 @Keep
 @Serializable
@@ -22,5 +22,5 @@ data class TransactionRequest(
     val filter: FilterEnum,
     val limit: Int,
     val offset: Int,
-    val token: String? = null
+    val token: String? = null,
 )
