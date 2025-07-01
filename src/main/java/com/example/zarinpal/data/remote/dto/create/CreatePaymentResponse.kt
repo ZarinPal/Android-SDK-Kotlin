@@ -10,34 +10,32 @@ import kotlinx.serialization.json.JsonElement
 /**
  * Represents the complete response returned by the payment creation API.
  *
- * @property data   Main response data with payment details.
- * @property errors JSON element containing error details, if any.
+ * @property data Contains the main response data ([CreatePaymentDataResponse]) with payment details.
+ * @property errors A JSON element containing error details, if any, in the API response.
  */
 @Keep
 @Serializable
 data class CreatePaymentResponse(
     val data: CreatePaymentDataResponse,
     val errors: JsonElement?
-)
+    )
 
 /**
  * Represents the response data returned after creating a payment.
  *
- * @property authority Unique ID for the payment session.
- * @property message   Status message of the payment creation.
- * @property feeType   Responsible party for the payment fee.
- * @property fee       Fee amount associated with the payment.
- * @property code      Status code (e.g., 100 for success).
+ * @property authority A unique identifier for the payment session, used for tracking.
+ * @property message A message indicating the status of the payment creation process.
+ * @property feeType Specifies the entity responsible for payment fees (e.g., "Merchant" or "Payer").
+ * @property fee The fee amount associated with the payment.
+ * @property code Status code of the payment creation (e.g., 100 for success).
  */
 @Keep
 @Serializable
 data class CreatePaymentDataResponse(
     val authority: String,
     val message: String,
-
     @SerialName("fee_type")
     val feeType: String?,
-
     val fee: Int,
-    val code: Int
+    val code: Int,
 )
