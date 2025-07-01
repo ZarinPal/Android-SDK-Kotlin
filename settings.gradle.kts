@@ -7,8 +7,8 @@ pluginManagement {
                 includeGroupByRegex("androidx.*")
             }
         }
-        mavenCentral()
         gradlePluginPortal()
+        mavenCentral()
         maven { url = uri("https://maven.pkg.jetbrains.space/public/p/ktor/eap") }
     }
 }
@@ -16,11 +16,9 @@ dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
-        mavenCentral()
         maven { url = uri("https://maven.pkg.jetbrains.space/public/p/ktor/eap") }
+        mavenCentral()
     }
 }
 
-rootProject.name = "new sdk"
-include(":app")
-include(":zarinPal")
+rootProject.name = "ZarinpalKotlinSDK"
