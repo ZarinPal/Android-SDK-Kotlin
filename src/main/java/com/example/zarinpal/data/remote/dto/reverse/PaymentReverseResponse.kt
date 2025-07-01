@@ -1,14 +1,15 @@
 package com.example.zarinpal.data.remote.dto.reverse
 
 import androidx.annotation.Keep
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonElement
 
 /**
- * Represents the response received after a payment reversal attempt.
+ * Represents the response data returned after reversing a payment.
  *
- * @property data Contains details of the reversal result.
- * @property errors Optional error information returned by the gateway.
+ * @property data Contains the details of the payment reversal response.
+ * @property errors If present, contains any errors returned by the payment gateway.
  */
 @Keep
 @Serializable
@@ -18,14 +19,14 @@ data class PaymentReverseResponse(
 )
 
 /**
- * Details the outcome of the payment reversal.
+ * Contains the data returned from the payment reversal process.
  *
- * @property code Status code representing the result.
- * @property message Description of the result or any error encountered.
+ * @property code A numeric code indicating the result of the reversal.
+ * @property message A descriptive message explaining the result or error.
  */
 @Keep
 @Serializable
 data class PaymentReverseDataResponse(
     val code: Int,
-    val message: String
+    val message: String,
 )
