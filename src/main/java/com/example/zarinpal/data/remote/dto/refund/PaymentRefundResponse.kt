@@ -4,9 +4,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
- * Top-level response returned after initiating a payment refund.
+ * Represents the response data returned after initiating a payment refund.
  *
- * @property data Details of the refund operation.
+ * @property data Contains the details of the refund response.
  */
 @Serializable
 data class PaymentRefundResponseModel(
@@ -14,9 +14,9 @@ data class PaymentRefundResponseModel(
 )
 
 /**
- * Container for refund resource information.
+ * Contains the data returned from the payment refund process.
  *
- * @property resource Detailed refund transaction data.
+ * @property resource The detailed response of the refund transaction.
  */
 @Serializable
 data class PaymentRefundDataModel(
@@ -24,12 +24,12 @@ data class PaymentRefundDataModel(
 )
 
 /**
- * Refund transaction details.
+ * Represents the details of the refund transaction.
  *
- * @property terminalId Terminal ID used for the refund.
- * @property id Unique identifier of the refund transaction.
- * @property amount Refunded amount in the smallest currency unit (e.g., IRR).
- * @property timeline Timeline of the refund process.
+ * @property terminalId The terminal ID used for the refund.
+ * @property id The unique identifier of the refund transaction.
+ * @property amount The total amount refunded in the smallest currency unit (e.g., IRR).
+ * @property timeline Contains details of the refund process, including the amount, time, and status.
  */
 @Serializable
 data class PaymentRefundResponse(
@@ -40,11 +40,11 @@ data class PaymentRefundResponse(
 )
 
 /**
- * Timeline of the refund process.
+ * Contains the timeline of the refund process, including the amount refunded, time of refund, and status.
  *
- * @property refundAmount Refunded amount in the smallest currency unit (e.g., IRR).
- * @property refundTime Timestamp of when the refund was processed.
- * @property refundStatus Current status of the refund (e.g., "completed", "pending").
+ * @property refundAmount The amount refunded in the smallest currency unit (e.g., IRR).
+ * @property refundTime The time when the refund was processed.
+ * @property refundStatus The status of the refund (e.g., "completed", "pending").
  */
 @Serializable
 data class PaymentRefundTimeline(
