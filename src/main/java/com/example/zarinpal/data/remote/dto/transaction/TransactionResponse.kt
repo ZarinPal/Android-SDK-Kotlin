@@ -5,49 +5,42 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 /**
- * Represents the full response returned from a transaction fetch request.
+ * Represents the response data returned when fetching transactions.
  *
- * @property data The actual response payload containing transaction sessions.
+ * @property data Contains the list of transaction sessions returned by the request.
  */
 @Keep
 @Serializable
 data class TransactionResponse(
-    @SerialName("data")
-    val data: TransactionData?
+    @SerialName("data") val data: Data?
 )
 
 /**
- * Container for the session list in the transaction response.
+ * Contains the data structure of the response, including a list of transaction sessions.
  *
  * @property session A list of [Session] objects representing individual transactions.
  */
 @Keep
 @Serializable
-data class TransactionData(
-    @SerialName("Session")
-    val session: List<Session>?
+data class Data(
+    @SerialName("Session") val session: List<Session>?
 )
 
 /**
- * Represents details of a single transaction session.
+ * Represents a single transaction session.
  *
- * @property id Unique identifier of the transaction.
- * @property status Status of the transaction (e.g., "completed", "pending").
- * @property amount Transaction amount in the smallest currency unit.
- * @property description Brief description of the transaction.
- * @property createdAt Timestamp of when the transaction was initiated.
+ * @property id The unique identifier of the transaction session.
+ * @property status The status of the transaction (e.g., "completed", "pending").
+ * @property amount The total amount of the transaction.
+ * @property description A brief description of the transaction.
+ * @property createdAt The date and time when the transaction was created.
  */
 @Keep
 @Serializable
 data class Session(
-    @SerialName("id")
-    val id: String,
-    @SerialName("status")
-    val status: String?,
-    @SerialName("amount")
-    val amount: Long,
-    @SerialName("description")
-    val description: String,
-    @SerialName("created_at")
-    val createdAt: String
+    @SerialName("id") val id: String,
+    @SerialName("status") val status: String?,
+    @SerialName("amount") val amount: Long,
+    @SerialName("description") val description: String,
+    @SerialName("created_at") val createdAt: String
 )
