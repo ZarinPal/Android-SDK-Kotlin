@@ -126,8 +126,9 @@ interface PaymentService {
                         )
                     }
                     defaultRequest {
-                        header("User-Agent", "ZarinPalSdk/v.1.1.1 (android kotlin)")
+                        header("User-Agent", "ZarinPalSdk/v.1.1.2 (android kotlin)")
                         header("Content-Type", "application/json")
+                        header("Package-Name", config.packageName)
                         contentType(ContentType.Application.Json)
                     }
                 },
